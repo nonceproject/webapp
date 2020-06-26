@@ -44,14 +44,14 @@ export default async function local() {
   );
 
   const processEnv = process.env;
-  if (!processEnv.WEBSITE_BUILD_PATH) {
+  if (!processEnv.WEBAPP_BUILD_PATH) {
     throw new Error('env variable not sufficient');
   }
 
   const port = process.env.PORT || 3001;
   const { app, serverState } = await ExpressIsomorphic.createDev({
     extend,
-    makeHtmlPath: path.resolve(processEnv.WEBSITE_BUILD_PATH, 'makeHtml.bundle.js'),
+    makeHtmlPath: path.resolve(processEnv.WEBAPP_BUILD_PATH, 'makeHtml.bundle.js'),
     watchExt: 'js,jsx,ts,tsx,html,test,md',
     watchPaths: [
     ],

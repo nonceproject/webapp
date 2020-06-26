@@ -2,10 +2,10 @@ import { compose } from 'redux';
 import styled, { createGlobalStyle } from 'styled-components';
 import React from 'react';
 
+import App from '@@src/universal/components/app/App/App';
 import color from '@@src/universal/styles/color';
 import ErrorBoundary from '@@src/universal/components/app/Error/ErrorBoundary';
 import normalize from '@@src/universal/styles/normalize';
-import ViewMount from '@@src/universal/components/views/ViewMount/ViewMount';
 import { w320 } from '@@src/universal/styles/media';
 
 const Normalize = createGlobalStyle`
@@ -73,7 +73,7 @@ const Universal: React.FC<any> = () => {
       <StyledUniversal>
         <Normalize />
         <GlobalStyle />
-        <div>33</div>
+        <App />
       </StyledUniversal>
     </ErrorBoundary>
   );

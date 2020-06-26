@@ -2,6 +2,7 @@ const merge = require('webpack-merge');
 const path = require('path');
 const webpack = require('webpack');
 
+const webpackEnv = require('./webpackEnv');
 const webpackConfigClientWeb = require(process.env.WEBPACK_CONFIG_CLIENT_WEB);
 
 const config = {
@@ -22,6 +23,9 @@ const config = {
     publicPath: '/g/',
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env.BACKEND_ENDPOINT': JSON.stringify(webpackEnv.backendEndpoint),
+    }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
   ],

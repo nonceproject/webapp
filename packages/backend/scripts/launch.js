@@ -4,7 +4,7 @@ const { logger } = require('jege/server');
 const babelRc = require('./.babelrc');
 const { gulp } = require('./build');
 
-const log = logger('[webapp]');
+const log = logger('[backend]');
 
 require('@babel/register')({
   ...babelRc,
@@ -14,20 +14,26 @@ require('@babel/register')({
 function launch() {
   log('launch(): argv: %j', argv);
 
+  if (argv.db) {
+    const table = require('../infrastructure/table');
+    return table();
+  }
+
   if (process.env.NODE_ENV === 'production') {
-    const buildTask = gulp.task('build');
-    buildTask(() => {
-      const serverProd = require('../src/server/index.production').default;
-      serverProd();
-    });
+    // const buildTask = gulp.task('build');
+    // buildTask(() => {
+    //   const serverProd = require('../src/server/index.production').default;
+    //   serverProd();
+    // });
   } else {
     const buildDevTask = gulp.task('build-dev');
-    buildDevTask(() => {
+    return buildDevTask(() => {
       log('launch(): build finished. launching...');
-      const server = require('../src/server/index.local').default;
-      server();
+      const app = require('../src/app.ts').default;
+      app();
     });
   }
+  return 0;
 }
 
 if (require.main === module) {

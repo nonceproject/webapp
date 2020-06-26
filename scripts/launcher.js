@@ -15,6 +15,21 @@ const paths = {
 };
 
 const processDefinitions = {
+  backend: proc(
+    'node',
+    [
+      './scripts/launch.js',
+      ...argv._,
+    ],
+    {
+      cwd: `./packages/backend`,
+      env: {
+        NODE_ENV: 'development',
+        ...processEnv,
+      },
+      stdio: 'inherit',
+    },
+  ),
   webapp: proc(
     'node',
     [

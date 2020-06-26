@@ -45,13 +45,13 @@ export default async function main() {
   );
 
   const processEnv = process.env;
-  if (!processEnv.WEBSITE_BUILD_PATH || !processEnv.WEBSITE_DATA_PATH || !processEnv.DIST_PATH) {
+  if (!processEnv.WEBAPP_BUILD_PATH || !processEnv.DIST_PATH) {
     throw new Error('Some env variables among {buildPath, dataPath, distPath} are wrong');
   }
 
   const { app, eject } = await ExpressIsomorphic.create({
     extend,
-    makeHtmlPath: path.resolve(processEnv.WEBSITE_BUILD_PATH, 'makeHtml.bundle.js'),
+    makeHtmlPath: path.resolve(processEnv.WEBAPP_BUILD_PATH, 'makeHtml.bundle.js'),
   });
 
   const port = 6001;

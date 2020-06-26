@@ -2,7 +2,7 @@ const fs = require('fs');
 const { logger } = require('jege/server');
 const path = require('path');
 
-const log = logger('[webapp-root]');
+const log = logger('[webapp]');
 
 const packageDir = [__dirname].concat(
   fs.readdirSync(path.resolve(__dirname, 'packages'))

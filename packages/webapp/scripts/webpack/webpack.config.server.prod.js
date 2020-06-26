@@ -18,7 +18,7 @@ const config = {
   output: {
     filename: 'makeHtml.bundle.js',
     libraryTarget: 'commonjs2',
-    path: process.env.WEBSITE_BUILD_PATH,
+    path: process.env.WEBAPP_BUILD_PATH,
     publicPath: '/',
   },
   plugins: [
