@@ -5,13 +5,12 @@ import http from 'http';
 import { logger } from 'jege/server';
 
 import * as db from './dynamodb';
-import { Record } from './types';
 
 const log = logger('[backend]');
 
 const port = process.env.BACKEND_PORT as string;
 
-function trafficLog(req, res, next) {
+function trafficLog(req, _, next) {
   log('trafficLog(): url: %s, body: %j', req.url, req.body);
   next();
 }
@@ -22,9 +21,10 @@ function withApi(app: express.Express) {
   app.use(cors());
   app.use(trafficLog);
 
-  app.get('/', (req, res) => {
+  app.post('/crawled', async (req, res) => {
+    const result = await db.getCrawled(req.body);
     res.send({
-      power: 1,
+      payload: result,
     });
   });
 }

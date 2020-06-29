@@ -20,31 +20,47 @@ function addProps(src, tar) {
     });
 }
 
-export async function write(record: Record) {
-  const now = Date.now().toString();
-  const params = {
-    Item: {
-      id: {
-        S: record.ensName,
-      },
-      updated_at: {
-        S: now,
-      },
-    },
+export async function getCrawled(_params: GetCrawledParams = {}) {
+  const params: AWS.DynamoDB.ScanInput = {
     TableName: 'crawl-2',
+    FilterExpression: 'attribute_exists(contentHash)',
+    Limit: 2000,
   };
 
-  addProps(record, params.Item);
-  return new Promise((resolve, reject) => {
-    db.putItem(params, function(err, data) {
+  if (_params.lastEvaluatedKey) {
+    params.ExclusiveStartKey = { id: { S: _params.lastEvaluatedKey } };
+  }
+
+  const tableDescription = new Promise((resolve, reject) => {
+    db.describeTable({ TableName: 'crawl-2'}, function(err, data) {
       if (err) {
-        log('write(): err: %s', err);
-        reject();
+        log('getcrawled(): tableDescription err, err: %s', err);
       } else {
-        log('write(): completed writing, now: %s, ensName: %s, resolverAddr: %s',
-            now, record.ensName, record.resolverAddr);
-        resolve();
+          const table = data['Table'] as any;
+          resolve(table['ItemCount']);
       }
     });
-  })
+  });
+
+  const queryResult = new Promise((resolve, reject) => {
+    db.scan(params, (err, data) => {
+      if (err) {
+        log('getCrawled(): queryResult error: %s', err);
+        reject();
+      }
+
+      log('getCrawled(): queryResult success, params: %j, count: %s', params, data.Items?.length);
+      resolve(data);
+    });
+  });
+
+  const [itemCount, crawled] = await Promise.all([tableDescription, queryResult]);
+  return {
+    crawled,
+    itemCount,
+  };
+}
+
+interface GetCrawledParams {
+  lastEvaluatedKey?;
 }

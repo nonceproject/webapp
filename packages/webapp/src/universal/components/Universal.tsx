@@ -39,7 +39,7 @@ const GlobalStyle = createGlobalStyle({
   html: {
     backgroundColor: color.htmlBackgroundColor,
     color: color.htmlColor,
-    fontFamily: '"Source Serif Pro", "Work Sans", "Helvetica", "Arial", sans-serif;',
+    fontFamily: '"Arial", "Helvetica", sans-serif;',
     fontSize: 14,
     lineHeight: 1.51,
   },
@@ -58,13 +58,6 @@ const GlobalStyle = createGlobalStyle({
 });
 
 const StyledUniversal = styled.div({
-  display: 'flex',
-  fontSize: '1.34rem',
-  justifyContent: 'center',
-  minWidth: 318,
-  ...w320({
-    fontSize: '1.25rem',
-  }),
 });
 
 const Universal: React.FC<any> = () => {
@@ -81,9 +74,3 @@ const Universal: React.FC<any> = () => {
 
 export default compose(
 )(Universal);
-
-declare global {
-  interface Window {
-    SimpleMDE;
-  }
-}
