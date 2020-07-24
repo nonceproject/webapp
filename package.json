@@ -1,12 +1,12 @@
 {
   "name": "webapp",
   "scripts": {
-    "backend": "node ./scripts/launcher.js --process backend",
+    "backend": "node ./internals/launcher.js --process backend",
     "dev": "npm-run-all -p backend webapp",
     "eslint": "echo \"eslint disabled\"",
     "lerna": "npx lerna",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "webapp": "node ./scripts/launcher.js --process webapp"
+    "webapp": "node ./internals/launcher.js --process webapp"
   },
   "repository": {
     "type": "url",
