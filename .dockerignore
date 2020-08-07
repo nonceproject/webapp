@@ -1,4 +1,1 @@
-config/*
-!config/.gitkeep
-
-.build/
+node_modules/

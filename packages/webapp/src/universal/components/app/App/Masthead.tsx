@@ -36,7 +36,7 @@ const Masthead = () => {
     <StyledMasthead>
       <Left>
         <Logo>
-          DWI
+          Nonce
         </Logo>
       </Left>
       <Right>

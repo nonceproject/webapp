@@ -7,7 +7,8 @@ COPY ./config /root/.aws
 
 RUN yarn install
 
+ENTRYPOINT ["./internals/entrypoint.sh"]
+
 EXPOSE 3001
 EXPOSE 4001
-
-ENTRYPOINT ["./internals/entrypoint.sh"]
+EXPOSE 5001
